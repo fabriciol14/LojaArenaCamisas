@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Camisas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bree+Serif&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sankofa+Display&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #a01b1b;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+        }
+
+        main.container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 8px solid #a01b1b;
+        }
+
+        h2, h3 {
+            color: #a01b1b;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, select, button {
+            width: 100%;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #a01b1b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #870d0d;
+        }
+
+        .payment-info {
+            display: none;
+        }
+
+        img {
+            display: block;
+            margin: 10px auto;
+            max-width: 100px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #a01b1b;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Arena Camisas</h1>
+    </header>
+
+    <main class="container">
+        <section id="payment">
+            <h2>Resumo da Compra</h2>
+            <p id="total-amount">Total a pagar: R$ 0,00</p>
+
+            <!-- Formulário de Dados Pessoais -->
+            <form id="personal-info-form">
+                <div id="personal-info">
+                    <h3>Informações Pessoais</h3>
+                    <p>
+                        <label for="name">Nome:</label>
+                        <input type="text" id="name" name="name" required>
+                    </p>
+                    <p>
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" name="email" required>
+                    </p>
+                    <p>O cadastro será finalizado por e-mail, por lá você poderá informar endereço de entrega.</p>
+                </div>
+
+                <!-- Método de Pagamento -->
+                <div id="payment-method-section">
+                    <h3>Escolha o Método de Pagamento</h3>
+                    <p>
+                        <label for="payment-method">Método de Pagamento:</label>
+                        <select id="payment-method" name="payment-method" required>
+                            <option value="" disabled selected>Escolha uma opção</option>
+                            <option value="pix">Pix</option>
+                            <option value="credit-card">Cartão de Crédito</option>
+                        </select>
+                    </p>
+
+                    <!-- Informações para Pix -->
+                    <div id="pix-info" class="payment-info">
+                        <h3>Pagamento via Pix</h3>
+                        <p>Escaneie o QR Code abaixo com seu aplicativo de banco:</p>
+                        <img src="qrcode-pix.png" alt="QR Code Pix">
+                        <p><button id="pix-button" type="button">Já realizei o pagamento</button></p>
+                    </div>
+
+                    <!-- Informações para Cartão de Crédito -->
+                    <div id="credit-card-info" class="payment-info">
+                        <h3>Pagamento com Cartão de Crédito</h3>
+                        <p>
+                            <label for="card-number">Número do Cartão:</label>
+                            <input type="text" id="card-number" name="card-number" required>
+                        </p>
+                        <p>
+                            <label for="expiry-date">Data de Validade:</label>
+                            <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/AA" maxlength="5" required>
+                        </p>
+                        <p>
+                            <label for="cvv">CVV:</label>
+                            <input type="text" id="cvv" name="cvv" maxlength="4" required>
+                        </p>
+                        <button type="submit">Finalizar Pagamento</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentMethodSelect = document.getElementById('payment-method');
+            const pixInfo = document.getElementById('pix-info');
+            const creditCardInfo = document.getElementById('credit-card-info');
+            const personalInfoForm = document.getElementById('personal-info-form');
+            const pixButton = document.getElementById('pix-button');
+
+            paymentMethodSelect.addEventListener('change', function() {
+                pixInfo.style.display = 'none';
+                creditCardInfo.style.display = 'none';
+
+                if (this.value === 'pix') {
+                    pixInfo.style.display = 'block';
+                } else if (this.value === 'credit-card') {
+                    creditCardInfo.style.display = 'block';
+                }
+            });
+
+            personalInfoForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                if (paymentMethodSelect.value === 'credit-card') {
+                    localStorage.removeItem('cart');
+                    window.location.href = 'thank-you.html';
+                }
+            });
+
+            pixButton.addEventListener('click', function() {
+                localStorage.removeItem('cart');
+                window.location.href = 'thank-you.html';
+            });
+        });
+    </script>
+
+    <footer>
+        <p>Projeto desenvolvido por Fabrício.</p>
+        <p>&copy; 2024 Arena Camisas. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

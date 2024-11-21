@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Camisas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bree+Serif&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sankofa+Display&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo Geral */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #a01b1b;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3em;
+            margin: 0;
+        }
+
+        #cart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        #cart-icon {
+            font-size: 1.8em;
+            margin-right: 8px;
+        }
+
+        #cart-count {
+            background-color: white;
+            color: #a01b1b;
+            font-weight: bold;
+            border-radius: 50%;
+            padding: 5px 10px;
+        }
+
+        main {
+            padding: 30px 10%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #product-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        #product-details img {
+            max-width: 500px;  /* Imagem com tamanho maior */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .details {
+            max-width: 500px;
+        }
+
+        .details h2 {
+            font-family: 'Bree Serif', serif;
+            color: #a01b1b;
+            font-size: 2em;
+        }
+
+        .details p {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        #add-to-cart-button {
+            background-color: #a01b1b;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #add-to-cart-button:hover {
+            background-color: #870f0f;
+        }
+
+        .expand-button {
+            background-color: #a01b1b;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .expand-button:hover {
+            background-color: #870f0f;
+        }
+
+        footer {
+            background-color: #a01b1b;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        #cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-button {
+            font-size: 2em;
+            font-weight: bold;
+            color: #a01b1b;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        #cart-items {
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+
+        #cart-total {
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 1.5em;
+            color: #a01b1b;
+        }
+
+        button {
+            background-color: #a01b1b;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #870f0f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Arena Camisas</h1>
+            <div id="cart" onclick="openCart()">
+                <span id="cart-icon">🛒</span>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="product-details">
+            <img id="product-image" alt="">
+            <div class="details">
+                <h2 id="product-name"></h2>
+                <p id="product-price"></p>
+                <p id="product-description"></p>
+                <button id="add-to-cart-button">Adicionar ao Carrinho</button>
+            </div>
+        </section>
+
+        <button class="expand-button" onclick="expandProducts()">Ver Mais Produtos</button>
+    </main>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeCart()">×</span>
+            <h2>Carrinho de Compras</h2>
+            <div id="cart-items">Nenhum item no carrinho</div>
+            <div id="cart-total">Total: R$ 0,00</div>
+            <button onclick="finalizePurchase()">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Projeto desenvolvido por Fabrício.</p>
+            <p>&copy; 2024 Arena Camisas. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carrega os parâmetros da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productName = urlParams.get('name');
+            const productPrice = urlParams.get('price');
+            const productImage = urlParams.get('image');
+            const productDescription = urlParams.get('description') || 'Descrição não disponível.';
+
+            // Exibe os dados do produto
+            document.getElementById('product-name').innerText = productName;
+            document.getElementById('product-price').innerText = `R$ ${parseFloat(productPrice).toFixed(2)}`;
+            document.getElementById('product-image').src = productImage;
+            document.getElementById('product-description').innerText = productDescription;
+
+            // Configura o botão de adicionar ao carrinho
+            document.getElementById('add-to-cart-button').addEventListener('click', function() {
+                addToCart(productName, parseFloat(productPrice));
+            });
+
+            // Atualiza o contador de itens no carrinho
+            updateCartCount();
+        });
+
+        // Função para adicionar item ao carrinho
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // Função para atualizar o contador de itens do carrinho
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        // Função para abrir o modal do carrinho
+        function openCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsDiv = document.getElementById('cart-items');
+            const cartTotalDiv = document.getElementById('cart-total');
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerText = 'Nenhum item no carrinho';
+                cartTotalDiv.innerText = 'Total: R$ 0,00';
+            } else {
+                cartItemsDiv.innerHTML = cart.map(item => `${item.name} - Quantidade: ${item.quantity}`).join('<br>');
+                const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                cartTotalDiv.innerText = `Total: R$ ${total.toFixed(2)}`;
+            }
+
+            document.getElementById('cart-modal').style.display = 'flex';
+        }
+
+        // Função para fechar o modal do carrinho
+        function closeCart() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        // Função para finalizar a compra
+        function finalizePurchase() {
+            alert('Compra finalizada com sucesso!');
+            localStorage.removeItem('cart');
+            updateCartCount();
+            closeCart();
+        }
+
+        // Função para expandir a lista de produtos
+        function expandProducts() {
+            window.location.href = 'index.html';  // Redireciona para a página inicial
+        }
+    </script>
+</body>
+</html>

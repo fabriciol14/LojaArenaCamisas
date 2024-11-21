@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Camisas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bree+Serif&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sankofa+Display&display=swap" rel="stylesheet">
+    <style>
+        /* Estilo Geral */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #a01b1b;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        #cart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        #cart-icon {
+            font-size: 1.5em;
+        }
+
+        #cart-count {
+            background-color: #fff;
+            color: #a01b1b;
+            font-weight: bold;
+            border-radius: 50%;
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #products h2 {
+            text-align: center;
+            font-family: 'Bree Serif', serif;
+            color: #a01b1b;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-grid.spaced {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        .product img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .product h3 {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #a01b1b;
+        }
+
+        .product button {
+            background-color: #a01b1b;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .product button:hover {
+            background-color: #870f0f;
+        }
+
+        #cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-button {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #a01b1b;
+            cursor: pointer;
+            float: right;
+        }
+
+        #cart-items {
+            margin: 20px 0;
+        }
+
+        #cart-total {
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        button {
+            background-color: #a01b1b;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #870f0f;
+        }
+
+        footer {
+            background-color: #a01b1b;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Arena Camisas</h1>
+            <div id="cart">
+                <span id="cart-icon">🛒</span>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="about-us" style="background-color: #fff; padding: 40px 20px; text-align: center; margin-bottom: 40px;">
+            <h2>Bem-vindo(a) à nossa loja!</h2>
+            <p>
+                A Arena Camisas é uma loja nova no mercado, mas com uma paixão imensa por futebol e pelo que ele representa. Nossa missão é proporcionar aos torcedores facilidade para que você mostre todo o seu amor pelo seu time. Sabemos que cada camisa tem uma história e é com muito orgulho que trazemos para você opções que representam sua paixão por grandes clubes e pela cultura do futebol.
+ Criada em 2024 nos dedicamos a oferecer um atendimento diferenciado e uma experiência de compra que vai além. Se você é apaixonado pelo futebol, encontrou o lugar certo para vestir a camisa do seu time com orgulho.</p>
+        </section>
+    
+        <section id="products">
+            <h2>Produtos</h2>
+            <div id="product-list" class="product-grid">
+                <!-- Produtos serão carregados dinamicamente -->
+            </div>
+        </section>
+    </main>
+    
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeCart()">×</span>
+            <h2>Carrinho de Compras</h2>
+            <div id="cart-items">Nenhum item no carrinho</div>
+            <div id="cart-total">Total: R$ 0,00</div>
+            <button onclick="finalizePurchase()">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Projeto desenvolvido por Fabrício.</p>
+            <p>&copy; 2024 Arena Camisas. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
